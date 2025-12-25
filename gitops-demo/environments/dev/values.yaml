@@ -18,7 +18,7 @@ environment: Development
 # Container image
 image:
   repository: ghcr.io/dws-org/dws-event-frontend
-  tag: v1.1
+  tag: latest
   pullSecret: ghcr-secret
 
 # Resource limits (lower for dev)
