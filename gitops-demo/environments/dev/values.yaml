@@ -1,7 +1,7 @@
 app:
   name: dws-event-frontend
   replicas: 2
-  apiUrl: "http://dws-event-service.dws-event-service.svc.cluster.local:6906/api/v1/events"
+  apiUrl: "http://dws-event-service.dws-event-service.svc.cluster.local:80/api/v1/events"
   nodeEnv: "development"
 
 namespace: dws-frontend-dev
