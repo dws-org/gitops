@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/dws-org/dws-backend-boilerplate
+  tag: latest
+
+service:
+  port: 8080 # This should match the port the Go app listens on
+
+ingress:
+  enabled: false # Typically backend services are internal or use API Gateway
+
+# Environment variables for the backend boilerplate
+env:
+  DATABASE_URL: "postgresql://postgres:w5f7eE-CJrTjPl-DfYZkV@dws-db-service.db.svc.cluster.local:5432/postgres?schema=public"
+  KEYCLOAK_ISSUER_URL: "http://keycloak.keycloak.svc.cluster.local:8080/realms/DWS"
+  KEYCLOAK_AUDIENCE: "backend-service"

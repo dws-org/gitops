@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitops-root-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd # Or a dedicated namespace for ArgoCD applications
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/dws-org/gitops.git # URL of THIS gitops repository
+    targetRevision: HEAD
+    path: apps # Path to the directory containing all other Application manifests
+  syncPolicy:
+    automated:        # enables automated sync
+      prune: true     # specifies if resources should be pruned during auto-syncing (false by default)
+      selfHeal: true  # specifies if a item should be reverted to the desired state if it has been modified in the cluster (false by default)

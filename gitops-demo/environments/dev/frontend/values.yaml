@@ -32,4 +32,6 @@ resources:
 
 # Ingress configuration
 ingress:
+  enabled: true # Enable ingress for frontend
   certIssuer: letsencrypt-staging
+  host: frontend-dev.ltu-m7011e-6.se

@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dws-event-service-production
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/dws-org/gitops.git
+    targetRevision: HEAD
+    path: gitops-demo/dws-event-service-app
+    helm:
+      valueFiles:
+        - ../environments/production/event-service/values.yaml
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dws-event-service
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

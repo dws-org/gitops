@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: postgres
+  tag: "14"
+
+env:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password # IMPORTANT: Change this in production!
+
+service:
+  port: 5432
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: standard # Adjust as needed for your cluster

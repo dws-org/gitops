@@ -1,6 +1,0 @@
-apiVersion: v2
-name: dws-frontend-app
-description: DWS Event Frontend Application
-type: application
-version: 1.0.0
-appVersion: "latest"

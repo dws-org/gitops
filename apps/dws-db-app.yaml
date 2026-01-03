@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dws-db-dev
+  namespace: argocd
+spec:
+  destination:
+    namespace: db # Assuming you want a 'db' namespace for the database
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/dws-org/dws-db.git # Assuming this is your db repo URL
+    targetRevision: HEAD
+    path: helm/dws-db # Path to the Helm chart within the db repo
+    helm:
+      valueFiles:
+        - ../gitops-demo/environments/dev/db/values.yaml # Path to the environment-specific values.yaml in THIS repo
+  syncPolicy:
+    automated:        # enables automated sync
+      prune: true     # specifies if resources should be pruned during auto-syncing (false by default)
+      selfHeal: true  # specifies if a item should be reverted to the desired state if it has been modified in the cluster (false by default)

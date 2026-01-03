@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/dws-org/dws-event-service
+  tag: latest
+
+service:
+  port: 6906 # This should match the port the Go app listens on
+
+# Enable ingress for the event service if it's exposed directly
+ingress:
+  enabled: false # Typically backend services are internal or use API Gateway
+  # host: events-dev.ltu-m7011e-6.se
+  # certIssuer: letsencrypt-staging
+
+# Environment variables for the event service
+env:
+  DATABASE_URL: "postgresql://postgres:w5f7eE-CJrTjPl-DfYZkV@dws-db-service.db.svc.cluster.local:5432/postgres?schema=public"
+  RABBITMQ_HOST: "rabbitmq-service.rabbitmq.svc.cluster.local"
+  RABBITMQ_ENABLED: "true"
+  KEYCLOAK_ISSUER_URL: "http://keycloak.keycloak.svc.cluster.local:8080/realms/DWS"
+  KEYCLOAK_AUDIENCE: "backend-service"

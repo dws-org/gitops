@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dws-backend-boilerplate-dev
+  namespace: argocd
+spec:
+  destination:
+    namespace: dws-backend-boilerplate-dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/dws-org/dws-backend-boilerplate.git # Assuming this is your backend boilerplate repo URL
+    targetRevision: HEAD
+    path: helm/dws-backend-boilerplate # Path to the Helm chart within the backend boilerplate repo
+    helm:
+      valueFiles:
+        - ../gitops-demo/environments/dev/backend-boilerplate/values.yaml # Path to the environment-specific values.yaml in THIS repo
+  syncPolicy:
+    automated:        # enables automated sync
+      prune: true     # specifies if resources should be pruned during auto-syncing (false by default)
+      selfHeal: true  # specifies if a item should be reverted to the desired state if it has been modified in the cluster (false by default)
