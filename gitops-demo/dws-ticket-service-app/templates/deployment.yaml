@@ -47,6 +47,14 @@ spec:
           env:
             - name: DATABASE_URL
               value: {{ .Values.env.databaseUrl | quote }}
+            {{- if .Values.env.rabbitmqUrl }}
+            - name: RABBITMQ_URL
+              value: {{ .Values.env.rabbitmqUrl | quote }}
+            {{- end }}
+            {{- if .Values.env.keycloakUrl }}
+            - name: KEYCLOAK_URL
+              value: {{ .Values.env.keycloakUrl | quote }}
+            {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
