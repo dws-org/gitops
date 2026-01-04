@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dws-ticket-service.fullname" . }}-consumer
+  labels:
+    {{- include "dws-ticket-service.labels" . | nindent 4 }}
+    app.kubernetes.io/component: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "dws-ticket-service.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: consumer
+  template:
+    metadata:
+      labels:
+        {{- include "dws-ticket-service.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: "{{ .Values.consumer.image.repository }}:{{ .Values.consumer.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.consumer.image.pullPolicy }}
+        env:
+        - name: DATABASE_URL
+          value: {{ .Values.env.databaseUrl | quote }}
+        - name: RABBITMQ_URL
+          value: {{ .Values.env.rabbitmqUrl | quote }}
+        {{- if .Values.env.keycloakUrl }}
+        - name: KEYCLOAK_URL
+          value: {{ .Values.env.keycloakUrl | quote }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.consumer.resources | nindent 10 }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

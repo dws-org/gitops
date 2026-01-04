@@ -169,3 +169,18 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Consumer configuration
+consumer:
+  enabled: true
+  image:
+    repository: ghcr.io/dws-org/dws-ticket-service-consumer
+    pullPolicy: Always
+    tag: "latest"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
