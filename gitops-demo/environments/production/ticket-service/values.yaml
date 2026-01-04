@@ -1,0 +1,55 @@
+# Production Environment Configuration for Ticket Service
+
+# Application configuration
+replicaCount: 2
+
+# Container port (the port your Go application listens on)
+containerPort: 8080
+
+# Environment variables for the application
+env:
+  databaseUrl: "postgresql://postgres:w5f7eE-CJrTjPl-DfYZkV@postgres-service.db.svc.cluster.local:5432/tickets?schema=public"
+  rabbitmqUrl: "amqp://guest:guest@rabbitmq-service-api.rabbitmq.svc.cluster.local:5672/"
+  keycloakUrl: "http://keycloak-service.keycloak.svc.cluster.local:8080"
+
+# Container image
+image:
+  repository: ghcr.io/dws-org/dws-ticket-service
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+
+# Resource limits (production)
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+# Health probes
+livenessProbe:
+  httpGet:
+    path: /api/v1/health
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /api/v1/health
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+# Ingress (disabled, accessed via ClusterIP from frontend)
+ingress:
+  enabled: false
