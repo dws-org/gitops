@@ -22,7 +22,17 @@ environment: Production
 image:
   repository: ghcr.io/dws-org/dws-event-frontend
   tag: latest
-  pullSecret: ghcr-secret
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+# Environment variables for Next.js  
+env:
+  - name: API_URL
+    value: "http://dws-event-service-production.dws-event-service.svc.cluster.local/api/v1/events"
+  - name: NODE_ENV
+    value: "production"
 
 # Resource limits (higher for production)
 resources:
