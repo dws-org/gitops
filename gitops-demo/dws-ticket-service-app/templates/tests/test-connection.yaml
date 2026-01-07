@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "dws-event-service.fullname" . }}-test-connection"
+  name: "{{ include "dws-ticket-service.fullname" . }}-test-connection"
   labels:
-    {{- include "dws-event-service.labels" . | nindent 4 }}
+    {{- include "dws-ticket-service.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "dws-event-service.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "dws-ticket-service.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never

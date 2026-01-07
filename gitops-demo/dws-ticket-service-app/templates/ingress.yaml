@@ -2,9 +2,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "dws-event-service.fullname" . }}
+  name: {{ include "dws-ticket-service.fullname" . }}
   labels:
-    {{- include "dws-event-service.labels" . | nindent 4 }}
+    {{- include "dws-ticket-service.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -35,7 +35,7 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "dws-event-service.fullname" $ }}
+                name: {{ include "dws-ticket-service.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
