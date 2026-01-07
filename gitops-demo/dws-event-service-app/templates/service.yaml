@@ -4,6 +4,10 @@ metadata:
   name: {{ include "dws-event-service.fullname" . }}
   labels:
     {{- include "dws-event-service.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{ .Values.service.port }}"
+    prometheus.io/path: "/metrics"
 spec:
   type: {{ .Values.service.type }}
   ports:
