@@ -35,4 +35,16 @@ resources:
 
 # Ingress configuration
 ingress:
-  certIssuer: letsencrypt-prod
+  enabled: true
+  className: "traefik"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: frontend.ltu-m7011e-6.se
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: dws-frontend-tls
+      hosts:
+        - frontend.ltu-m7011e-6.se
