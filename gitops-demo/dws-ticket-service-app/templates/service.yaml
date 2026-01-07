@@ -4,6 +4,10 @@ metadata:
   name: {{ include "dws-ticket-service.fullname" . }}
   labels:
     {{- include "dws-ticket-service.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{ .Values.service.port }}"
+    prometheus.io/path: "/metrics"
 spec:
   type: {{ .Values.service.type }}
   ports:
